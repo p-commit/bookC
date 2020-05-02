@@ -1,0 +1,14 @@
+
+{% for advert in advert_list%}
+
+<p>{{advert.filters}}</p>
+<h2>{{advert.subject}}</h2>
+
+
+<p>{{advert.category}}</p>
+
+
+<p>{{advert.text}}</p>
+<p>{{advert.created}}</p>
+<hr>
+{%endfor%}
