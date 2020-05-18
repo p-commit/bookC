@@ -1,0 +1,41 @@
+{% extends 'adverts/base.html' %}
+
+{% block title %}
+{{advert.subject}}
+{% endblock title %}
+
+{% block content %}
+<p>{{advert.filters}}</p>
+{{advert.user.username}}
+<p>
+{% for category in advert.category.all%}
+| {{category}}
+{% endfor %}
+</p>
+
+
+<p>{{advert.text}}</p>
+<p>{{advert.created}}</p>
+
+<hr>
+<form method="post" action="{% url 'add_comment' advert.id %}">
+    {% csrf_token %}
+    <label>Ваше имя:</label>
+    <textarea name="name" rows=1 cols=80></textarea>
+    <br>
+
+    <label>Комментарий:</label>
+    <textarea name="text" rows=5 cols=80></textarea>
+
+    <button type="submit" class="btn btn-primary">Отправить</button>
+</form>
+
+
+{% for comment in advert.comments_set.all %}
+<hr>
+<p>{{comment.name}}</p>
+<p>{{comment.created}}</p>
+<p>{{comment.text}}</p>
+
+{% endfor %}
+{% endblock content %}

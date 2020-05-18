@@ -1,8 +1,16 @@
+{% extends 'adverts/base.html' %}
 
+
+{% block title %}
+    Объявления
+{% endblock title %}
+
+{% block content %}
 {% for advert in advert_list%}
-
 <p>{{advert.filters}}</p>
-<h2>{{advert.subject}}</h2>
+<a href={{ advert.get_absolute_url }}>
+    <h2>{{advert.subject}}</h2>
+</a>
 
 <p>
 {% for category in advert.category.all%}
@@ -10,8 +18,9 @@
 {% endfor %}
 </p>
 
-
-<p>{{advert.text}}</p>
 <p>{{advert.created}}</p>
 <hr>
 {%endfor%}
+
+
+{% endblock content %}

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 from utils.transliteration import transliteration_rus_eng
 
@@ -104,6 +105,29 @@ class Advert(models.Model):
     def __str__(self):
         return self.subject
 
+    def get_absolute_url(self):
+        return reverse("advert_detail", kwargs={"slug": self.slug})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = CommentForm()
+        return context
+
     class Meta:
         verbose_name = "Объявление"
         verbose_name_plural = "Объявления"
+
+
+class Comments(models.Model):
+    """Комментарии"""
+    name = models.CharField("Имя", max_length=50)
+    text = models.TextField("Сообщение", max_length=400)
+    created = models.DateTimeField("Дата создания", auto_now_add=True)
+    advert = models.ForeignKey(Advert, verbose_name="Объявление", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name + " | " + str(self.advert)
+
+    class Meta:
+        verbose_name = "Комментарий"
+        verbose_name_plural = "Коментарии"
