@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-
 from utils.transliteration import transliteration_rus_eng
 
 
@@ -86,7 +85,7 @@ class Advert(models.Model):
         "Цена",
         max_digits=8,
         decimal_places=2,
-        default = 0.00
+        default=0.00
     )
     created = models.DateTimeField("Дата создания", auto_now_add=True)
     moderation = models.BooleanField("Модерация", default=False)
@@ -99,7 +98,7 @@ class Advert(models.Model):
     )
 
     def save(self, *args, **kwargs):
-        self.slug = transliteration_rus_eng(self.subject) + "_" + str(self.user.id)
+        self.slug = ("advert" + transliteration_rus_eng(self.id) + "-" + str(self.user.id))
         super().save(*args, **kwargs)
 
     def __str__(self):

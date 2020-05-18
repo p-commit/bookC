@@ -6,6 +6,6 @@ from .models import Advert
 class AdvertsView(ListView):
     '''Список обьявлений'''
     model = Advert
-    queryset = Advert.objects.filter(moderation = True)
-
+    queryset = Advert.objects.filter( moderation = True)
+    print(queryset[0].category.all())
 
