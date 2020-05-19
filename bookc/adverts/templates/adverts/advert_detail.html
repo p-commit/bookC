@@ -8,6 +8,11 @@
 <p>{{advert.filters}}</p>
 {{advert.user.username}}
 <p>
+{% for image in advert.images.photos.all%}
+<img src=media/{{image.image.name}} alt = "{{image.name}}">
+{% endfor %}
+</p>
+
 {% for category in advert.category.all%}
 | {{category}}
 {% endfor %}
@@ -20,13 +25,11 @@
 <hr>
 <form method="post" action="{% url 'add_comment' advert.id %}">
     {% csrf_token %}
-    <label>Ваше имя:</label>
-    <textarea name="name" rows=1 cols=80></textarea>
+
+    <textarea name="name" rows=1 cols=80 placeholder="Ваше имя"></textarea>
     <br>
-
-    <label>Комментарий:</label>
-    <textarea name="text" rows=5 cols=80></textarea>
-
+    <textarea name="text" rows=5 cols=80 placeholder="Комментарий"></textarea>
+    <br>
     <button type="submit" class="btn btn-primary">Отправить</button>
 </form>
 
@@ -34,8 +37,8 @@
 {% for comment in advert.comments_set.all %}
 <hr>
 <p>{{comment.name}}</p>
-<p>{{comment.created}}</p>
 <p>{{comment.text}}</p>
+<p>{{comment.created}}</p>
 
 {% endfor %}
 {% endblock content %}

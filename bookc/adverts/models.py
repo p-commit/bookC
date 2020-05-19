@@ -74,13 +74,13 @@ class Advert(models.Model):
     subject = models.CharField("Тема", max_length=200)
     text = models.TextField("Объявление", max_length=10000)
 
-    # images = models.ForeignKey(
-    #     'gallery.Gallery',
-    #     verbose_name="Изображения",
-    #     blank=True,
-    #     null=True,
-    #     on_delete=models.SET_NULL
-    # )
+    images = models.ForeignKey(
+        'gallery.ImageSet',
+        verbose_name="Изображения",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     price = models.DecimalField(
         "Цена",
