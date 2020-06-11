@@ -3,7 +3,11 @@ from django.views.generic.base import View,TemplateView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.http import HttpResponseRedirect
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from django.contrib.auth.models import User
 from .models import Profile
+from .forms import RegisterForm
 
 
 class ProfileView(TemplateView):
@@ -17,13 +21,20 @@ class ProfileView(TemplateView):
 
 
 class RegisterView(FormView):
-    form_class = UserCreationForm
+    form_class = RegisterForm
     success_url = "/login/"
     template_name = "register.html"
 
     def form_valid(self, form):
         form.save()
         return super(RegisterView, self).form_valid(form)
+
+
+@receiver(post_save, sender=User)
+def new_user(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+        instance.profile.save()
 
 
 class LoginView(FormView):

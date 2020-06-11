@@ -6,8 +6,18 @@
   <body>
     <form action="" method="post">
       {% csrf_token %}
-      {{ form.as_p }}
+      <table>
+        <tr>
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+        </tr>
+      </table>
       <button type="submit">Войти</button>
     </form>
+    <a href = "http://127.0.0.1:8000/register/">Регситрация</a>
   </body>
 </html>

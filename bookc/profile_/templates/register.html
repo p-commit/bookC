@@ -6,7 +6,18 @@
   <body>
     <form action="" method="post">
       {% csrf_token %}
-      {{ form.as_p }}
+      {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+        <span>{{ field.help_text }}</span>
+        {% endif %}
+        {% for error in field.errors %}
+        <p>{{ error }}</p>
+        {% endfor %}
+      </p>
+      {% endfor %}
       <button type="submit">Зарегистрироваться</button>
     </form>
   </body>
